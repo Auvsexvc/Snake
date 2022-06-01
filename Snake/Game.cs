@@ -16,7 +16,7 @@
 
         public Game()
         {
-            Draw();
+            DrawBox();
             snake = new Snake();
             for (int i = 0; i < MealsAtStart; i++)
                 meals.Add(new Nutrient());
@@ -97,7 +97,7 @@
             }
         }
 
-        private void Draw()
+        private void DrawBox()
         {
             Console.CursorVisible = false;
             WriteAt("┌", 0, 0);
