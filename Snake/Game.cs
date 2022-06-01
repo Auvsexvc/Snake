@@ -22,7 +22,7 @@
                 meals.Add(new Nutrient());
         }
 
-        public void Input()
+        public void InitControls()
         {
             if (Console.KeyAvailable)
             {
@@ -53,7 +53,7 @@
             }
         }
 
-        public void Action()
+        public void Play()
         {
             if (TimeLapse() >= Speed)
             {

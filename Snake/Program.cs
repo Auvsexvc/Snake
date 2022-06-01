@@ -6,6 +6,6 @@ Game game = new Game();
 
 while (!game.Exit)
 {
-    game.Input();
-    game.Action();
+    game.InitControls();
+    game.Play();
 }
