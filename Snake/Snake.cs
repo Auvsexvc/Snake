@@ -1,4 +1,6 @@
-﻿namespace SnakeGame
+﻿using SnakeGame.Interfaces;
+
+namespace SnakeGame
 {
     public class Snake : ISnake
     {
@@ -11,7 +13,9 @@
         public void Eat(Meal meal)
         {
             if (meal.GetType() == typeof(Nutrient))
+            {
                 Length++;
+            }
             else
             {
                 Console.SetCursorPosition(Tail.FirstOrDefault().X, Tail.FirstOrDefault().Y);

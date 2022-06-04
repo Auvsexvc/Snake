@@ -1,14 +1,17 @@
-﻿namespace SnakeGame
+﻿using SnakeGame.Interfaces;
+
+namespace SnakeGame
 {
     internal class Game
     {
-        private ISnake snake;
+        private ISnake _snake;
+
         private int origRow;
         private int origCol;
 
         public bool Exit { get; set; } = false;
         public bool QuitOnDemand { get; set; } = false;
-        public bool GameOver => snake.Tail.Where(t => t.X == snake.HeadPosition.X && t.Y == snake.HeadPosition.Y).ToList().Count > 1;
+        public bool GameOver => _snake.Tail.Where(t => t.X == _snake.HeadPosition.X && t.Y == _snake.HeadPosition.Y).ToList().Count > 1;
         public DateTime Time { get; set; } = DateTime.Now;
         public double Speed { get; set; } = 1000 / 5.0;
         public int MealsAtStart { get; set; } = 10;
@@ -17,9 +20,11 @@
         public Game()
         {
             DrawBox();
-            snake = new Snake();
+            _snake = new Snake();
             for (int i = 0; i < MealsAtStart; i++)
+            {
                 meals.Add(new Nutrient());
+            }
         }
 
         public void InitControls()
@@ -35,19 +40,19 @@
                         break;
 
                     case ConsoleKey.LeftArrow:
-                        if (snake.Direction != Direction.Right) snake.Direction = Direction.Left;
+                        if (_snake.Direction != Direction.Right) _snake.Direction = Direction.Left;
                         break;
 
                     case ConsoleKey.RightArrow:
-                        if (snake.Direction != Direction.Left) snake.Direction = Direction.Right;
+                        if (_snake.Direction != Direction.Left) _snake.Direction = Direction.Right;
                         break;
 
                     case ConsoleKey.UpArrow:
-                        if (snake.Direction != Direction.Down) snake.Direction = Direction.Up;
+                        if (_snake.Direction != Direction.Down) _snake.Direction = Direction.Up;
                         break;
 
                     case ConsoleKey.DownArrow:
-                        if (snake.Direction != Direction.Up) snake.Direction = Direction.Down;
+                        if (_snake.Direction != Direction.Up) _snake.Direction = Direction.Down;
                         break;
                 }
             }
@@ -57,23 +62,23 @@
         {
             if (TimeLapse() >= Speed)
             {
-                snake.Move();
+                _snake.Move();
 
                 for (int m = 0; m < meals.Count; m++)
                 {
-                    if (meals[m].Position.X == snake.HeadPosition.X && meals[m].Position.Y == snake.HeadPosition.Y)
+                    if (meals[m].Position.X == _snake.HeadPosition.X && meals[m].Position.Y == _snake.HeadPosition.Y)
                     {
-                        snake.Eat(meals[m]);
+                        _snake.Eat(meals[m]);
                         meals.Add(new Nutrient());
                         meals.Add(new Poison());
                         SpeedUp();
                     }
                 }
 
-                if (GameOver || snake.OutOfRange || QuitOnDemand || snake.Length < 1)
+                if (GameOver || _snake.OutOfRange || QuitOnDemand || _snake.Length < 1)
                 {
                     Console.Clear();
-                    int score = snake.Length <= 1 ? 0 : snake.Length;
+                    int score = _snake.Length <= 1 ? 0 : _snake.Length;
                     Console.WriteLine($"Game Over. Your score is {score}.\nHit Enter to exit.");
                     Console.ReadLine();
                     Exit = true;
@@ -116,19 +121,10 @@
             }
         }
 
-        private void SpeedUp()
-        {
-            Speed /= 1.1;
-        }
+        private void SpeedUp() => Speed /= 1.1;
 
-        private double TimeLapse()
-        {
-            return (DateTime.Now - Time).TotalMilliseconds;
-        }
+        private double TimeLapse() => (DateTime.Now - Time).TotalMilliseconds;
 
-        private void Update()
-        {
-            Time = DateTime.Now;
-        }
+        private void Update() => Time = DateTime.Now;
     }
 }
