@@ -18,7 +18,7 @@ namespace SnakeGame
             }
             else
             {
-                Console.SetCursorPosition(Tail.FirstOrDefault().X, Tail.FirstOrDefault().Y);
+                Console.SetCursorPosition(Tail.First().X, Tail.First().Y);
                 Console.Write(" ");
                 Tail.RemoveAt(0);
                 Length--;
@@ -53,7 +53,7 @@ namespace SnakeGame
                 Tail.Add(new Coordinate(HeadPosition.X, HeadPosition.Y));
                 if (Tail.Count > this.Length)
                 {
-                    var endTail = Tail.FirstOrDefault();
+                    var endTail = Tail.First();
                     Console.SetCursorPosition(endTail.X, endTail.Y);
                     Console.Write(" ");
                     Tail.Remove(endTail);

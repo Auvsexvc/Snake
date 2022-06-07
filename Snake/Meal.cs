@@ -4,9 +4,9 @@
     {
         public Coordinate Position { get; set; }
 
-        public Meal()
+        protected Meal()
         {
-            Random rand = new Random();
+            Random rand = new();
             var x = rand.Next(2, Console.WindowWidth - 2);
             var y = rand.Next(2, Console.WindowHeight - 2);
             Position = new Coordinate(x, y);
