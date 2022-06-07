@@ -2,7 +2,7 @@
 
 using SnakeGame;
 
-Game game = new Game();
+Game game = new();
 
 while (!game.Exit)
 {

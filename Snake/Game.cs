@@ -4,10 +4,7 @@ namespace SnakeGame
 {
     internal class Game
     {
-        private ISnake _snake;
-
-        private int origRow;
-        private int origCol;
+        private readonly ISnake _snake;
 
         public bool Exit { get; set; } = false;
         public bool QuitOnDemand { get; set; } = false;
@@ -15,7 +12,7 @@ namespace SnakeGame
         public DateTime Time { get; set; } = DateTime.Now;
         public double Speed { get; set; } = 1000 / 5.0;
         public int MealsAtStart { get; set; } = 10;
-        public List<Meal> meals { get; set; } = new List<Meal>();
+        public List<Meal> Meals { get; set; } = new List<Meal>();
 
         public Game()
         {
@@ -23,7 +20,7 @@ namespace SnakeGame
             _snake = new Snake();
             for (int i = 0; i < MealsAtStart; i++)
             {
-                meals.Add(new Nutrient());
+                Meals.Add(new Nutrient());
             }
         }
 
@@ -64,13 +61,13 @@ namespace SnakeGame
             {
                 _snake.Move();
 
-                for (int m = 0; m < meals.Count; m++)
+                for (int m = 0; m < Meals.Count; m++)
                 {
-                    if (meals[m].Position.X == _snake.HeadPosition.X && meals[m].Position.Y == _snake.HeadPosition.Y)
+                    if (Meals[m].Position.X == _snake.HeadPosition.X && Meals[m].Position.Y == _snake.HeadPosition.Y)
                     {
-                        _snake.Eat(meals[m]);
-                        meals.Add(new Nutrient());
-                        meals.Add(new Poison());
+                        _snake.Eat(Meals[m]);
+                        Meals.Add(new Nutrient());
+                        Meals.Add(new Poison());
                         SpeedUp();
                     }
                 }
@@ -88,11 +85,11 @@ namespace SnakeGame
             }
         }
 
-        private void WriteAt(string s, int x, int y)
+        private static void WriteAt(string s, int x, int y)
         {
             try
             {
-                Console.SetCursorPosition(origCol + x, origRow + y);
+                Console.SetCursorPosition(x, y);
                 Console.Write(s);
             }
             catch (ArgumentOutOfRangeException e)
@@ -102,7 +99,7 @@ namespace SnakeGame
             }
         }
 
-        private void DrawBox()
+        private static void DrawBox()
         {
             Console.CursorVisible = false;
             WriteAt("┌", 0, 0);
