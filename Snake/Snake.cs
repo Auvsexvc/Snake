@@ -18,7 +18,7 @@ namespace SnakeGame
             }
             else
             {
-                Console.SetCursorPosition(Tail.First().X, Tail.First().Y);
+                Console.SetCursorPosition(Tail[0].X, Tail[0].Y);
                 Console.Write(" ");
                 Tail.RemoveAt(0);
                 Length--;
@@ -45,7 +45,7 @@ namespace SnakeGame
                     HeadPosition.Y++;
                     break;
             }
-            if ((HeadPosition.X >= 1 && HeadPosition.X <= Console.BufferWidth - 2) && (HeadPosition.Y >= 1 && HeadPosition.Y <= Console.BufferHeight - 2))
+            if (HeadPosition.X >= 1 && HeadPosition.X <= Console.BufferWidth - 2 && (HeadPosition.Y >= 1 && HeadPosition.Y <= Console.BufferHeight - 2))
             {
                 Console.SetCursorPosition(HeadPosition.X, HeadPosition.Y);
                 Console.ForegroundColor = ConsoleColor.DarkYellow;
@@ -53,7 +53,7 @@ namespace SnakeGame
                 Tail.Add(new Coordinate(HeadPosition.X, HeadPosition.Y));
                 if (Tail.Count > this.Length)
                 {
-                    var endTail = Tail.First();
+                    var endTail = Tail[0];
                     Console.SetCursorPosition(endTail.X, endTail.Y);
                     Console.Write(" ");
                     Tail.Remove(endTail);
